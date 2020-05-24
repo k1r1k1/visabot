@@ -1,0 +1,16 @@
+{
+  "name": "visa_bot_by",
+  "version": "0.0.1",
+  "description": "Bot that gives information about visa in Belarus",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "telegraf": "^3.38.0"
+  }
+}
