@@ -2,15 +2,18 @@
   "name": "visa_bot_by",
   "version": "0.0.1",
   "description": "Bot that gives information about visa in Belarus",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "nodemon src/index.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "mongoose": "^5.9.15",
+    "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.4",
     "telegraf": "^3.38.0"
   }
 }
