@@ -1,11 +1,14 @@
 const Scene = require('telegraf/scenes/base');
 
+const { sceneManager } = require('./index');
 const locales = require('../constants/locales.json');
-const { getMainKeyboard } = require('../keyboards')
+const { getMainKeyboard } = require('../keyboards');
+const { saveUser } = require('../utils/database');
 
-const sayHi = ctx => {
-		const { reply, update: { message: { from }}} = ctx;
+const sayHi = async ({ reply, update }) => {
+		const { message: { from }} = update;
 		const { messages: { welcome }} = locales;
+		await saveUser(from);
 		reply(welcome.replace('username', from.username),
 					getMainKeyboard()
 		);
@@ -13,7 +16,6 @@ const sayHi = ctx => {
 
 const greeter = new Scene('greeter');
 greeter.enter((ctx) => sayHi(ctx));
-greeter.leave((ctx) => ctx.reply('Greeter Bye'));
-greeter.on('message', (ctx) => ctx.reply('Greeter hi'));
+greeter.on('message', (ctx) => sceneManager(ctx));
 
 module.exports = greeter;

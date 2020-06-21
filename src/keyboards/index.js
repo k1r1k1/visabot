@@ -5,11 +5,21 @@ const {
 						about,
 						contact,
 						exit,
-						search_country
+						search_country,
+						show_lists,
+						show_no_visa
 				},
-				back
+				back,
+				start
 		},
 } = require('../constants/locales.json');
+
+module.exports.getStartKeyboard = () => {
+		let startKeyboard = Markup.keyboard([start]);
+		startKeyboard = startKeyboard.resize().extra();
+
+		return startKeyboard;
+};
 
 module.exports.getBackKeyboard = () => {
 		let backKeyboard = Markup.keyboard([back]);
@@ -20,8 +30,9 @@ module.exports.getBackKeyboard = () => {
 
 module.exports.getMainKeyboard = () => {
 		let mainKeyboard = Markup.keyboard([
-				[contact, about],
-				[exit, search_country],
+				[about, search_country],
+				[contact, show_no_visa],
+				[exit, show_lists],
 		]);
 		mainKeyboard = mainKeyboard.resize().extra();
 

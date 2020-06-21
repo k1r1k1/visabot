@@ -1,36 +1,32 @@
 const Scene = require('telegraf/scenes/base');
 
 const {
-		messages: { what_next },
+		messages,
 		keyboards: { back }
 } = require('../constants/locales.json');
-const { getBackKeyboard, getMainKeyboard } = require('../keyboards')
+const { getBackKeyboard, getMainKeyboard } = require('../keyboards');
+const { findCountry } = require('../utils/database');
+const { getCountriesKeyboard, chooseCountryAction } = require('../utils/helper');
 
 const searchScene = new Scene('search');
-searchScene.leave((ctx) => ctx.reply(what_next, getMainKeyboard()));
-searchScene.enter(({ reply }) => reply('type text',
-			getBackKeyboard()
-	)
-);
 
-searchScene.on('message', async (ctx) => {
-		const {
-				reply,
-				scene,
-				message: {
-						text
-				}
-		} = ctx;
+searchScene.leave(({ reply }) => reply(messages.what_next, getMainKeyboard()));
+searchScene.enter(({ reply }) => reply(messages.searching, getBackKeyboard()));
+searchScene.action(/chooseCountry/, chooseCountryAction);
 
-		switch (text) {
-				case back:
-						await scene.leave('search');
-						break;
+searchScene.on('message', async ({
+			reply,
+			scene,
+			message: {
+					text
+			}
+	}) => {
+		if (text === back)	return scene.leave('search');
 
-				default:
-						await reply('search results');
-						break;
-		}
+		const result = await findCountry('name', text);
+		if (!result.length) return await reply(messages.not_found);
+
+		await reply(messages.look_found, getCountriesKeyboard(result));
 });
 
 module.exports = searchScene;

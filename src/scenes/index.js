@@ -1,3 +1,7 @@
+const { getStartKeyboard } = require('../keyboards');
+
+const { removeUser } = require('../utils/database');
+
 const {
 		keyboards: {
 				main: {
@@ -6,17 +10,16 @@ const {
 						search_country,
 						contact
 				},
+				start
 		},
-		messages
+		messages,
 } = require('../constants/locales.json');
 
 module.exports.sceneManager = async ctx => {
 		const {
 				reply,
-					scene,
-				message: {
-						text
-				}
+				scene,
+				message: { text, from },
 		} = ctx;
 		switch (text) {
 				case about:
@@ -28,11 +31,17 @@ module.exports.sceneManager = async ctx => {
 						break;
 
 				case exit:
-						reply('Всего доброго 😌')
+						await removeUser(from);
+						await reply('Всего доброго 😌', getStartKeyboard());
+						await scene.leave();
 						break;
 
 				case contact:
-						reply(messages.contact)
+						reply(messages.contact);
+						break;
+
+				case start:
+						await scene.enter('greeter');
 						break;
 
 				default:
