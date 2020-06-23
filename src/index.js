@@ -6,15 +6,16 @@ require('dotenv').config();
 
 const bot = new Tg(process.env.BOT_TOKEN);
 
-const { sceneManager } = require('./scenes');
 const greeter = require('./scenes/greeting');
 const searchScene = require('./scenes/search');
+const countryScene = require('./scenes/country');
 
 const { dbConnect } = require('./utils/database');
 
 const stage = new Stage();
 stage.register(greeter);
 stage.register(searchScene);
+stage.register(countryScene);
 
 bot.use(session())
 bot.use(stage.middleware());
@@ -33,6 +34,11 @@ bot.catch((err, ctx) => {
 		console.log(`Ooops, encountered an error for ${ctx.updateType}`, err)
 });
 
-bot.launch();
-
-dbConnect();
+(async function () {
+		dbConnect()
+					.then(async () => {
+								await bot.launch();
+								console.log('[APP] bot started');
+						})
+					.catch(e => console.log(e));
+})();

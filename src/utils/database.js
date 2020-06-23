@@ -16,10 +16,10 @@ module.exports.dbConnect  = async () => {
 						useUnifiedTopology: true,
 				});
 				app.listen(PORT, () => {
-						console.log('DB connected successfully');
+						console.log('[APP] DB connected');
 				})
 		} catch (e) {
-				console.log('DB connection error', e);
+				console.log('[APP] DB connection error', e);
 		}
 }
 
@@ -51,6 +51,14 @@ module.exports.removeUser = user => {
 		try {
 				const query = { id: user.id };
 				return User.deleteOne(query);
+		} catch	(e) {
+				console.error(e);
+		}
+}
+
+module.exports.findUser = userId => {
+		try {
+				return User.findOne({ id: userId });
 		} catch	(e) {
 				console.error(e);
 		}

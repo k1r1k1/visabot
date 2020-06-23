@@ -4,13 +4,12 @@ const {
 		messages,
 		keyboards: { back }
 } = require('../constants/locales.json');
-const { getBackKeyboard, getMainKeyboard } = require('../keyboards');
+const { getBackKeyboard } = require('../keyboards');
 const { findCountry } = require('../utils/database');
 const { getCountriesKeyboard, chooseCountryAction } = require('../utils/helper');
 
 const searchScene = new Scene('search');
 
-searchScene.leave(({ reply }) => reply(messages.what_next, getMainKeyboard()));
 searchScene.enter(({ reply }) => reply(messages.searching, getBackKeyboard()));
 searchScene.action(/chooseCountry/, chooseCountryAction);
 
@@ -21,7 +20,7 @@ searchScene.on('message', async ({
 					text
 			}
 	}) => {
-		if (text === back)	return scene.leave('search');
+		if (text === back)	return scene.enter('greeter');
 
 		const result = await findCountry('name', text);
 		if (!result.length) return await reply(messages.not_found);

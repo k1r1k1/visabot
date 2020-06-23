@@ -6,7 +6,7 @@ const {
 						contact,
 						exit,
 						search_country,
-						show_lists,
+						show_checklist,
 						show_no_visa
 				},
 				back,
@@ -32,7 +32,7 @@ module.exports.getMainKeyboard = () => {
 		let mainKeyboard = Markup.keyboard([
 				[about, search_country],
 				[contact, show_no_visa],
-				[exit, show_lists],
+				[exit, show_checklist],
 		]);
 		mainKeyboard = mainKeyboard.resize().extra();
 

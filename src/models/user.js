@@ -28,6 +28,10 @@ const schema = new Schema({
 		date: {
 				type: Number,
 				required: true,
+		},
+		checklist: {
+				type: Array,
+				default: []
 		}
 });
 

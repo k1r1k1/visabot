@@ -17,6 +17,10 @@ const schema = new Schema({
 				type: String,
 				required: true
 		},
+		visas: {
+				type: Array,
+				default: []
+		},
 });
 
 module.exports = model('Country', schema);

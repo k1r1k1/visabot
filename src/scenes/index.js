@@ -1,6 +1,7 @@
+const { getCheckListText } = require('../utils/helper');
+const { findUser } = require('../utils/database');
 const { getStartKeyboard } = require('../keyboards');
-
-const { removeUser } = require('../utils/database');
+// const { removeUser } = require('../utils/database');
 
 const {
 		keyboards: {
@@ -8,9 +9,11 @@ const {
 						about,
 						exit,
 						search_country,
-						contact
+						contact,
+						show_checklist
 				},
-				start
+				start,
+				force_exit
 		},
 		messages,
 } = require('../constants/locales.json');
@@ -31,9 +34,10 @@ module.exports.sceneManager = async ctx => {
 						break;
 
 				case exit:
-						await removeUser(from);
+				case force_exit:
+						// await removeUser(from);
 						await reply('Всего доброго 😌', getStartKeyboard());
-						await scene.leave();
+						await scene.leave('greeter');
 						break;
 
 				case contact:
@@ -42,6 +46,11 @@ module.exports.sceneManager = async ctx => {
 
 				case start:
 						await scene.enter('greeter');
+						break;
+
+				case show_checklist:
+						const { checklist } = await findUser(from.id);
+						await reply(getCheckListText(checklist));
 						break;
 
 				default:
