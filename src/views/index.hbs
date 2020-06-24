@@ -1,0 +1,34 @@
+<h5>All countries - you can manage them here</h5>
+
+{{#if data.length}}
+
+    <ul>
+        {{#each data}}
+            <li class="country">
+                <label>
+
+                    <span class="name">{{name}}</span>
+
+                    <div class="actions">
+                        <form action="/complete" method="post">
+                            <input type="hidden" value="{{code}}" name="id">
+
+                            <button class="btn btn-small" type="submit">Update</button>
+                        </form>
+
+                        <form action="/delete" method="post">
+                            <input type="hidden" value="{{code}}" name="id">
+                            <button class="btn btn-small red darken-1" type="submit">Remove</button>
+                        </form>
+                    </div>
+
+                </label>
+            </li>
+        {{/each}}
+    </ul>
+
+{{else}}
+    <p>No countries</p>
+{{/if}}
+
+<a href="/create" class="btn btn-big">Create</a>

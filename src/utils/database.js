@@ -1,12 +1,31 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
+const path = require('path');
+const exphbs = require('express-handlebars');
 
 const Country = require('../models/country');
 const User = require('../models/user');
 
 const PORT = process.env.PORT || 3000
 const dbConfig = process.env.DB_CONFIG;
+
+// admin panel
+
+const Routes = require('../routes');
+
+const app = express();
+const hbs = exphbs.create({
+		defaultLayout: 'main',
+		extname: 'hbs',
+});
+
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+app.set('views', 'src/views');
+
+app.use(express.urlencoded({ extended: true })); // for parsing in queries
+app.use(express.static(path.join(__dirname, '/../../public')));
+app.use(Routes);
 
 module.exports.dbConnect  = async () => {
 		try {

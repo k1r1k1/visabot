@@ -1,0 +1,38 @@
+.nav-wrapper {
+    padding: 0 2rem;
+}
+
+.country {
+    margin-bottom: 1rem;
+}
+
+.country span.completed {
+    text-decoration: line-through;
+}
+
+.country label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background: #f3f3f3;
+    padding: 1rem;
+}
+
+.user img {
+    width: 50px;
+    height: 50px;
+}
+
+.country i {
+    z-index: 2;
+}
+
+.country .actions {
+    display: flex;
+}
+
+.country .actions form {
+    margin: 0 .5rem;
+}
