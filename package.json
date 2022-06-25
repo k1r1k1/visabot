@@ -14,7 +14,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "mongoose": "^5.9.19",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "telegraf": "^3.38.0"
   },
   "devDependencies": {
